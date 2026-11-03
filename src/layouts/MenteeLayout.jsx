@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Menu, Bell, Search, Compass, User, Calendar, ExternalLink } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { Menu, Bell } from 'lucide-react';
 import Sidebar from '../components/common/Sidebar';
 import Avatar from '../components/ui/Avatar';
 import Button from '../components/ui/Button';
@@ -10,9 +11,16 @@ export default function MenteeLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
+  const user = useSelector((state) => state.auth.user);
+  const notifications = useSelector((state) => state.notifications.notifications);
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const displayName = user?.name || user?.fullName || 'Mentee';
+  const avatarUrl = user?.avatar || null;
+
   // Find current active item title
   const currentItem = MENTEE_NAV_LINKS.find((item) => item.href === location.pathname) || {
-    name: 'Mentee Portal'
+    name: 'Mentee Portal',
   };
 
   return (
@@ -34,7 +42,8 @@ export default function MenteeLayout() {
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition"
+              aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -56,20 +65,22 @@ export default function MenteeLayout() {
               title="Notifications"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+              )}
             </Link>
 
             <div className="h-6 w-px bg-slate-200 hidden sm:block" />
 
-            <Link to="/mentee/profile" className="flex items-center gap-2">
+            <Link to="/mentee/profile" className="flex items-center gap-2.5 group">
               <Avatar
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
-                name="Jordan Hayes"
+                src={avatarUrl}
+                name={displayName}
                 size="sm"
                 status="online"
               />
-              <span className="hidden md:inline text-xs font-semibold text-slate-700">
-                Jordan
+              <span className="hidden md:inline text-xs font-semibold text-slate-700 group-hover:text-slate-900 transition">
+                {displayName}
               </span>
             </Link>
           </div>

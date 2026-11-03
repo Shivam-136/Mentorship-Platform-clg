@@ -5,8 +5,10 @@ import Avatar from '../../components/ui/Avatar';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import EmptyState from '../../components/ui/EmptyState';
+import useToast from '../../utils/useToast';
 
 export default function BookingRequests() {
+  const toast = useToast();
   const [requests, setRequests] = useState([
     {
       id: 'req-1',
@@ -34,7 +36,11 @@ export default function BookingRequests() {
 
   const handleAction = (id, action) => {
     setRequests(requests.filter((r) => r.id !== id));
-    alert(`Booking request ${action}ed!`);
+    if (action === 'accept') {
+      toast.success('Booking request accepted! Added to upcoming sessions.', 'Request Accepted');
+    } else {
+      toast.info('Booking proposal has been declined.', 'Request Declined');
+    }
   };
 
   return (

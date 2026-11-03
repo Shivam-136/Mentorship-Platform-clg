@@ -28,6 +28,7 @@ import MenteeFindMentors from './pages/mentee/FindMentors';
 import MenteeBookings from './pages/mentee/Bookings';
 import MenteeUpcomingSessions from './pages/mentee/UpcomingSessions';
 import MenteeSessionHistory from './pages/mentee/SessionHistory';
+import MentorshipProgress from './pages/mentee/Progress';
 import MenteeReviews from './pages/mentee/Reviews';
 import MenteeNotifications from './pages/mentee/Notifications';
 import MenteeProfile from './pages/mentee/Profile';
@@ -36,13 +37,18 @@ import MenteeSettings from './pages/mentee/Settings';
 // Mentor Dashboard Pages
 import MentorDashboard from './pages/mentor/Dashboard';
 import MentorProfilePage from './pages/mentor/Profile';
+import MentorServices from './pages/mentor/Services';
 import MentorBookingRequests from './pages/mentor/BookingRequests';
 import MentorUpcomingSessions from './pages/mentor/UpcomingSessions';
 import MentorSessionHistory from './pages/mentor/SessionHistory';
 import MentorAvailability from './pages/mentor/Availability';
+import MentorEarnings from './pages/mentor/Earnings';
 import MentorReviews from './pages/mentor/Reviews';
 import MentorNotifications from './pages/mentor/Notifications';
 import MentorSettings from './pages/mentor/Settings';
+
+// UI Components
+import ToastContainer from './components/ui/Toast';
 
 // 404 Page
 import Button from './components/ui/Button';
@@ -66,6 +72,7 @@ function NotFound() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         {/* 1. Public Routes */}
         <Route element={<PublicLayout />}>
@@ -95,6 +102,7 @@ export default function App() {
           <Route path="bookings" element={<MenteeBookings />} />
           <Route path="upcoming-sessions" element={<MenteeUpcomingSessions />} />
           <Route path="session-history" element={<MenteeSessionHistory />} />
+          <Route path="progress" element={<MentorshipProgress />} />
           <Route path="reviews" element={<MenteeReviews />} />
           <Route path="notifications" element={<MenteeNotifications />} />
           <Route path="profile" element={<MenteeProfile />} />
@@ -106,10 +114,12 @@ export default function App() {
           <Route index element={<Navigate to="/mentor/dashboard" replace />} />
           <Route path="dashboard" element={<MentorDashboard />} />
           <Route path="profile" element={<MentorProfilePage />} />
+          <Route path="services" element={<MentorServices />} />
           <Route path="booking-requests" element={<MentorBookingRequests />} />
           <Route path="upcoming-sessions" element={<MentorUpcomingSessions />} />
           <Route path="session-history" element={<MentorSessionHistory />} />
           <Route path="availability" element={<MentorAvailability />} />
+          <Route path="earnings" element={<MentorEarnings />} />
           <Route path="reviews" element={<MentorReviews />} />
           <Route path="notifications" element={<MentorNotifications />} />
           <Route path="settings" element={<MentorSettings />} />

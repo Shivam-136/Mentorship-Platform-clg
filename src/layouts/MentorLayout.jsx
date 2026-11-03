@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Menu, Bell, Shield, CalendarClock, CheckCircle } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { Menu, Bell } from 'lucide-react';
 import Sidebar from '../components/common/Sidebar';
 import Avatar from '../components/ui/Avatar';
 import Badge from '../components/ui/Badge';
-import Button from '../components/ui/Button';
 import { MENTOR_NAV_LINKS } from '../constants/navigation';
 
 export default function MentorLayout() {
@@ -12,8 +12,15 @@ export default function MentorLayout() {
   const [isAcceptingBookings, setIsAcceptingBookings] = useState(true);
   const location = useLocation();
 
+  const user = useSelector((state) => state.auth.user);
+  const notifications = useSelector((state) => state.notifications.notifications);
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const displayName = user?.name || user?.fullName || 'Mentor';
+  const avatarUrl = user?.avatar || null;
+
   const currentItem = MENTOR_NAV_LINKS.find((item) => item.href === location.pathname) || {
-    name: 'Mentor Workspace'
+    name: 'Mentor Workspace',
   };
 
   return (
@@ -35,7 +42,8 @@ export default function MentorLayout() {
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition"
+              aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -73,20 +81,22 @@ export default function MentorLayout() {
               title="Notifications"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-purple-600 ring-2 ring-white" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-purple-600 ring-2 ring-white" />
+              )}
             </Link>
 
             <div className="h-6 w-px bg-slate-200 hidden sm:block" />
 
-            <Link to="/mentor/profile" className="flex items-center gap-2">
+            <Link to="/mentor/profile" className="flex items-center gap-2.5 group">
               <Avatar
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"
-                name="Dr. Sarah Jenkins"
+                src={avatarUrl}
+                name={displayName}
                 size="sm"
                 status="online"
               />
-              <span className="hidden md:inline text-xs font-semibold text-slate-700">
-                Dr. Jenkins
+              <span className="hidden md:inline text-xs font-semibold text-slate-700 group-hover:text-slate-900 transition">
+                {displayName}
               </span>
             </Link>
           </div>

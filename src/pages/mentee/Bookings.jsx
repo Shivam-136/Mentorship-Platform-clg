@@ -5,9 +5,11 @@ import EmptyState from '../../components/ui/EmptyState';
 import Modal from '../../components/ui/Modal';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import useToast from '../../utils/useToast';
 import { MOCK_BOOKINGS } from '../../data/mockData';
 
 export default function Bookings() {
+  const toast = useToast();
   const [activeTab, setActiveTab] = useState('all'); // 'all' | 'upcoming' | 'completed'
   const [bookings, setBookings] = useState(MOCK_BOOKINGS);
   const [selectedSession, setSelectedSession] = useState(null);
@@ -31,6 +33,7 @@ export default function Bookings() {
     setBookings(
       bookings.map((b) => (b.id === selectedSession.id ? { ...b, status: 'Cancelled' } : b))
     );
+    toast.info('Session cancelled successfully.', 'Booking Cancelled');
     setModalType(null);
     setSelectedSession(null);
   };
@@ -41,7 +44,7 @@ export default function Bookings() {
   };
 
   const confirmReschedule = () => {
-    alert('Reschedule request sent to mentor!');
+    toast.success('Reschedule request sent to mentor!', 'Request Sent');
     setModalType(null);
   };
 
@@ -58,6 +61,7 @@ export default function Bookings() {
           : b
       )
     );
+    toast.success('Thank you! Your review has been recorded.', 'Feedback Submitted');
     setModalType(null);
     setSelectedSession(null);
   };

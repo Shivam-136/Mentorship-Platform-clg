@@ -3,8 +3,10 @@ import { Mail, MessageCircle, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
+import useToast from '../../utils/useToast';
 
 export default function Contact() {
+  const toast = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +18,7 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+    toast.success('Your message has been received! We will reply promptly.', 'Message Sent');
     setTimeout(() => {
       setSubmitted(false);
       setFormData({ name: '', email: '', subject: '', message: '' });

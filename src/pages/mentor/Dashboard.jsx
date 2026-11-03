@@ -18,9 +18,11 @@ import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Avatar from '../../components/ui/Avatar';
+import useToast from '../../utils/useToast';
 import { MOCK_BOOKINGS } from '../../data/mockData';
 
 export default function MentorDashboard() {
+  const toast = useToast();
   const [requests, setRequests] = useState([
     {
       id: 'req-1',
@@ -52,11 +54,12 @@ export default function MentorDashboard() {
 
   const handleAccept = (reqId) => {
     setRequests(requests.filter((r) => r.id !== reqId));
-    alert('Booking request accepted! Added to upcoming sessions.');
+    toast.success('Booking request accepted! Added to upcoming sessions.', 'Request Confirmed');
   };
 
   const handleDecline = (reqId) => {
     setRequests(requests.filter((r) => r.id !== reqId));
+    toast.info('Booking request declined.', 'Request Removed');
   };
 
   return (
