@@ -80,7 +80,7 @@ export const bookingSlice = createSlice({
       saveState(STORAGE_KEYS.BOOKING_REQUESTS, state.incomingRequests);
     },
     addIncomingRequest: (state, action) => {
-      const userRequest = {
+      const userRequest = {   
         ...action.payload,
         isLocal: true,
         syncStatus: action.payload.syncStatus || 'pending_sync',

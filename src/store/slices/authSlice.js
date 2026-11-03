@@ -70,6 +70,9 @@ export const authSlice = createSlice({
             avatar: state.user.avatar || null,
             title: state.user.title || state.user.roleTitle || '',
             bio: state.user.bio || '',
+            company: state.user.company || '',
+            careerGoal: state.user.careerGoal || '',
+            skills: state.user.skills || '',
           },
           role: state.role,
         });

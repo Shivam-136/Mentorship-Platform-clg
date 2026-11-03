@@ -12,7 +12,8 @@ export default function SessionCard({
   onJoin,
   onReschedule,
   onCancel,
-  onLeaveReview
+  onLeaveReview,
+  onViewNotes,
 }) {
   const isCompleted = session.status?.toLowerCase() === 'completed';
   const isUpcoming = session.status?.toLowerCase() === 'upcoming' || session.status?.toLowerCase() === 'confirmed';
@@ -71,20 +72,32 @@ export default function SessionCard({
       <div className="flex items-center gap-2 shrink-0 md:self-center border-t md:border-t-0 pt-3 md:pt-0">
         {isUpcoming && (
           <>
-            <a
-              href={session.meetUrl || '#'}
-              target="_blank"
-              rel="noreferrer"
-            >
+            {onJoin ? (
               <Button
                 size="sm"
                 variant="primary"
                 leftIcon={<Video className="w-4 h-4" />}
                 className="text-xs shadow-sm"
+                onClick={() => onJoin(session)}
               >
                 Join Meeting
               </Button>
-            </a>
+            ) : (
+              <a
+                href={session.meetUrl || '#'}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button
+                  size="sm"
+                  variant="primary"
+                  leftIcon={<Video className="w-4 h-4" />}
+                  className="text-xs shadow-sm"
+                >
+                  Join Meeting
+                </Button>
+              </a>
+            )}
             <Button
               size="sm"
               variant="outline"
@@ -121,6 +134,7 @@ export default function SessionCard({
             variant="outline"
             leftIcon={<FileText className="w-3.5 h-3.5" />}
             className="text-xs"
+            onClick={() => onViewNotes && onViewNotes(session)}
           >
             View Notes
           </Button>
