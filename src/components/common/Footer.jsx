@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, ShieldCheck, Heart, Globe } from 'lucide-react';
+import { Compass, ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
   return (

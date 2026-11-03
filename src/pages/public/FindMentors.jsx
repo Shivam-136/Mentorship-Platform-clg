@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Search, Filter, X, LogIn } from 'lucide-react';
+import { Filter, X, LogIn } from 'lucide-react';
 import MentorCard from '../../components/cards/MentorCard';
 import SearchBar from '../../components/ui/SearchBar';
 import Select from '../../components/ui/Select';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { Compass, ShieldCheck, Star, Users, CheckCircle2 } from 'lucide-react';
+import { Compass, ShieldCheck, Star, CheckCircle2 } from 'lucide-react';
 
 export default function AuthLayout() {
   return (

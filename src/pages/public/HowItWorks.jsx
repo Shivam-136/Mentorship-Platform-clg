@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, CalendarCheck, Video, Rocket, CheckCircle2, DollarSign, Users, Award } from 'lucide-react';
+import { Search, CalendarCheck, Video, Rocket, DollarSign, Users, Award } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 

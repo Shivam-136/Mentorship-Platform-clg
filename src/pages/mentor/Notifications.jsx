@@ -6,7 +6,6 @@ import {
   Calendar,
   Star,
   Trash2,
-  CheckCircle2,
   DollarSign,
 } from 'lucide-react';
 import Card from '../../components/ui/Card';

@@ -120,7 +120,7 @@ export default function Home() {
         if (isMounted) {
           setFeaturedMentors(Array.isArray(data) ? data : data?.mentors || []);
         }
-      } catch (err) {
+      } catch {
         if (isMounted) {
           // No fake mentors on error; maintain empty state
           setFeaturedMentors([]);
