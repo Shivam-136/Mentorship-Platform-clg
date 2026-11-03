@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
-import Badge from '../../components/ui/Badge';
 import MentorCard from '../../components/cards/MentorCard';
 import EmptyState from '../../components/ui/EmptyState';
 import { mentorService } from '../../services/mentorService';

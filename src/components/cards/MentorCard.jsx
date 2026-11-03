@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShieldCheck, Clock, MapPin, ArrowRight } from 'lucide-react';
+import { Star, ShieldCheck, Clock, ArrowRight } from 'lucide-react';
 import Card from '../ui/Card';
 import Avatar from '../ui/Avatar';
-import Badge from '../ui/Badge';
 import Button from '../ui/Button';
 
 export default function MentorCard({ mentor, onBookNow }) {

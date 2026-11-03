@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   DollarSign,
-  TrendingUp,
   CreditCard,
-  ArrowUpRight,
   Download,
   CheckCircle2,
-  Clock,
   Building,
-  Plus,
 } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
@@ -41,6 +37,47 @@ export default function MentorEarnings() {
     bankName: payoutMethod?.bankName || '',
     routingNumber: payoutMethod?.routingNumber || '',
   });
+
+  const handleExportStatements = () => {
+    if (completedBookings.length === 0 && transactions.length === 0) {
+      toast.info('No transactions or settled sessions to export.', 'Export Unavailable');
+      return;
+    }
+
+    const headers = ['Record ID', 'Date', 'Type / Topic', 'Gross Amount ($)', 'Net Payout ($)', 'Status'];
+    const rows = [
+      ...completedBookings.map((b) => [
+        b.id,
+        b.date,
+        `"${(b.topic || 'Mentorship Call').replace(/"/g, '""')}"`,
+        b.price || 0,
+        Math.round((b.price || 0) * 0.9),
+        'Settled',
+      ]),
+      ...transactions.map((t) => [
+        t.id,
+        t.date,
+        `"${(t.description || 'Transaction').replace(/"/g, '""')}"`,
+        t.amount || 0,
+        Math.round((t.amount || 0) * 0.9),
+        t.status || 'Paid',
+      ]),
+    ];
+
+    const csvContent =
+      'data:text/csv;charset=utf-8,' +
+      [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `mentor_earnings_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success('Earnings statement exported to CSV.', 'Export Complete');
+  };
 
   const handleSavePayoutMethod = (e) => {
     e.preventDefault();
@@ -74,15 +111,26 @@ export default function MentorEarnings() {
           </p>
         </div>
 
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => setIsPayoutModalOpen(true)}
-          leftIcon={<CreditCard className="w-4 h-4" />}
-          className="self-start sm:self-auto"
-        >
-          {payoutMethod ? 'Manage Payout Account' : 'Set Up Payout Account'}
-        </Button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleExportStatements}
+            leftIcon={<Download className="w-3.5 h-3.5" />}
+            className="text-xs"
+          >
+            Export Statement (.CSV)
+          </Button>
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={() => setIsPayoutModalOpen(true)}
+            leftIcon={<CreditCard className="w-4 h-4" />}
+            className="text-xs bg-purple-600 hover:bg-purple-700"
+          >
+            {payoutMethod ? 'Manage Payout Account' : 'Set Up Payout Account'}
+          </Button>
+        </div>
       </div>
 
       {/* Metrics Row */}

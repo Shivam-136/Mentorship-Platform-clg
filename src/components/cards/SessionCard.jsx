@@ -1,9 +1,7 @@
 import React from 'react';
-import { Calendar, Clock, Video, FileText, CheckCircle2, MoreVertical } from 'lucide-react';
+import { Calendar, Clock, Video, FileText } from 'lucide-react';
 import Card from '../ui/Card';
-import Badge from '../ui/Badge';
 import Button from '../ui/Button';
-import Avatar from '../ui/Avatar';
 import { getStatusColor } from '../../utils/helpers';
 
 export default function SessionCard({
